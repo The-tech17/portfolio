@@ -1,0 +1,174 @@
+{
+  "profile": {
+    "name": "Sanjana Londhe",
+    "title": "AI • Prompt Engineering • Creative Writing",
+    "headline": "Crafting Intelligent Experiences with AI.",
+    "bio": "I am a Prompt Engineer and AI Vibe Developer passionate about building human-centric AI applications.",
+    "summary": "My work combines prompt engineering, Android development, creative writing, and intelligent automation to create software that feels natural, conversational, and useful. I enjoy designing AI workflows, developing Android and web applications, and exploring how creativity can enhance human–computer interaction.",
+    "photo": "assets/profile/profile.jpg"
+  },
+  "skills": [
+    "Prompt Engineering",
+    "Android Development",
+    "Creative Writing",
+    "Generative AI"
+  ],
+  "projects": [
+    {
+      "name": "Buds",
+      "status": "Active",
+      "desc": "A creative AI chatbot designed to serve as an interactive, empathetic conversational buddy. Built for Android.",
+      "tags": [
+        "Android Studio",
+        "Gemini",
+        "Claude",
+        "ChatGPT"
+      ],
+      "github": "https://github.com/The-tech17/Buds-AI",
+      "demo": "",
+      "image": "assets/projects/buds.png",
+      "casestudy": "content/projects/buds.md",
+      "gallery": [
+        "assets/projects/buds.png"
+      ],
+      "problem": "Traditional chatbots use rigid, robotic structures that fail to validate emotional nuances, causing users to disengage during times of high emotional distress. Also, chats are automatically saved, violating the sensitivity and sentiments of the users.",
+      "solution": "Built a multi-mode chat system using Gemini and Android Studio, which enables users to interact freely and safely, with theme preferences.",
+      "timeline": "July 2025 (12 Weeks)"
+    },
+    {
+      "name": "Visa Helper AI",
+      "status": "Active",
+      "desc": "An AI-powered assistant designed to simplify the visa application process. It helps users find the right visa type, gather necessary documents, and understand application procedures—all through an intelligent, conversational interface.",
+      "tags": [
+        "Python",
+        "Streamlit",
+        "Gemini"
+      ],
+      "github": "https://github.com/The-tech17/Visa__helper",
+      "demo": "https://visaapper-cfeky4ds2vapxuv6numgwp.streamlit.app/",
+      "image": "assets/projects/visa-helper.png",
+      "casestudy": "content/projects/visa-helper.md",
+      "gallery": [
+        "assets/gallery/visa1.png",
+        "assets/gallery/visa2.png",
+        "assets/gallery/visa3.png"
+      ],
+      "problem": "Visa application requirements are spread across confusing government portals, written in complex legal terms, leading applicants to upload incorrect files and face rejections.",
+      "solution": "Created a RAG (Retrieval-Augmented Generation) pipeline that indexes immigration policy guidelines and matches query intents, outputting interactive, easy-to-use checklist dashboards.",
+      "timeline": "Feb 2026 (3 Weeks)"
+    },
+    {
+      "name": "AI Spam blocker",
+      "status": "Active",
+      "desc": "An AI powered application which helps classify spam and ham emails with appropriate explanation",
+      "tags": [
+        "Python",
+        "Streamlit",
+        "Gemini"
+      ],
+      "github": "https://github.com/The-tech17/AI-Spam-Classifier",
+      "demo": "https://ai-spam-classifier-ceqkrdomyfjzszkcktbadu.streamlit.app/",
+      "image": "assets/projects/spam-blocker.png",
+      "casestudy": "",
+      "gallery": [
+        "assets/projects/spam-blocker.png"
+      ],
+      "problem": "Traditional spam filters only flag messages without explaining why, leaving users in the dark about potential phishing signatures or false positives.",
+      "solution": "Developed a real-time email parser that processes email bodies, identifies deceptive patterns, and outputs clear reasoning behind spam classifications.",
+      "timeline": "March 2026 (3 Weeks)"
+    },
+    {
+      "name": "EcoTrace",
+      "status": "Active",
+      "desc": "An AI powered application which helps in keeping trace of carbon footprint of any activity",
+      "tags": [
+        "Android Studio",
+        "Gemini"
+      ],
+      "github": "https://github.com/The-tech17/EcoTrace",
+      "demo": "https://ecotrace-ebzth3t4u-sanjana-londhe-s-projects.vercel.app/",
+      "image": "assets/projects/ecotrace.png",
+      "casestudy": "",
+      "gallery": [
+        "assets/projects/ecotrace.png"
+      ],
+      "problem": "Understanding personal environmental impact is hard due to complex emissions formulas and missing database tracking schemas.",
+      "solution": "Constructed an Android tracker where Gemini estimates emission metrics from natural language input (e.g. 'drove 15km in a SUV'), maintaining local historical logs.",
+      "timeline": "June 2026 (3 Weeks)"
+    },
+    {
+      "name": "ArenaGenius2026",
+      "status": "Active",
+      "desc": "An AI powered application for regular updates and information regarding FIFA World Cup 2026",
+      "tags": [
+        "Python",
+        "Gemini",
+        "Streamlit"
+      ],
+      "github": "https://github.com/The-tech17/ArenaGenius2026",
+      "demo": "https://arenagenius2026-fdfmj9hizwjzfgztxm56rs.streamlit.app/",
+      "image": "assets/projects/arenagenius.png",
+      "casestudy": "",
+      "gallery": [
+        "assets/projects/arenagenius.png"
+      ],
+      "problem": "Sports news is fragmented, dynamic, and full of clickbait, making it difficult to get objective summaries and timetables.",
+      "solution": "Engineered an updates portal that crawls verified feeds, aggregates schedule schedules, and responds to natural language sports trivia inquiries.",
+      "timeline": "July 2026 (3 Weeks)"
+    }
+  ],
+  "publications": [
+    {
+      "title": "Love, and only love",
+      "isbn": "ISBN 978-81-985729-0-5",
+      "desc": "A collection of short prose, introspective poetry, and essays examining the textures of human intimacy, digital vulnerability, and emotional friction in modern society.",
+      "cover": "assets/books/love-cover.jpg",
+      "pdf": "assets/books/sample.pdf",
+      "buyLink": "https://amazon.com"
+    },
+    {
+      "title": "Poem-The Sea Speaks (Book: Your Ink)",
+      "isbn": "ISBN 978-93-6489-354-1",
+      "desc": "A reflection on the power of nature and its ability to inspire awe and wonder.",
+      "cover": "assets/books/your-ink.jpg",
+      "preview": "assets/books/sea-speaks-page.jpg",
+      "pdf": "assets/books/sample.pdf",
+      "buyLink": "https://amazon.com"
+    },
+    {
+      "title": "Poem-A New Spring (Book: Blossoms begin)",
+      "isbn": "ISBN 978-81-986291-8-0",
+      "desc": "A poem that celebrates the beauty of nature and the joy of spring.",
+      "cover": "assets/books/blossoms.jpg",
+      "preview": "assets/books/blossoms.jpg",
+      "pdf": "assets/books/sample.pdf",
+      "buyLink": "https://amazon.com"
+    }
+  ],
+  "experience": [
+    {
+      "date": "July 2026 - Present",
+      "title": "AI Intern",
+      "institution": "Flyrank.ai",
+      "desc": "Leveraging prompt engineering skills to create robust and scalable applications"
+    },
+    {
+      "date": "2023 - 2027",
+      "title": "Bachelor of Technology in Computer Science",
+      "institution": "Medi-Caps University",
+      "desc": "Pursuing B.Tech in Computer Science and Business Systems with a strong foundation in prompt engineering and Gen AI fundamentals."
+    },
+    {
+      "date": "September 2024",
+      "title": "First Place — Essay Writing Competition, Sahityik, Medi-Caps University",
+      "institution": "Sahityik, Medi-Caps University",
+      "desc": "Topic: Urbanization: Development or Destruction? Crafted an analytical essay that explored the dual nature of urban development, examining both its role as a catalyst for economic progress and its potential to exacerbate social inequalities and environmental degradation."
+    }
+  ],
+  "contact": {
+    "email": "londhesanjana17@gmail.com",
+    "location": "Indore, India",
+    "github": "https://github.com/The-tech17",
+    "linkedin": "https://www.linkedin.com/in/sanjana-londhe-9ab383334/"
+  }
+}
