@@ -113,7 +113,7 @@ function initResumeUpload(onAutofill) {
 
         // Clear terminal
         terminal.innerHTML = '';
-        
+
         const logs = [
             `$ bash ai-resume-parser.sh --file "${file.name}"`,
             `[INFO] Target document length: ${file.size} bytes`,
@@ -148,7 +148,7 @@ function initResumeUpload(onAutofill) {
                     line.className += ' text-emerald-400 font-semibold';
                 }
                 line.textContent = logs[index];
-                
+
                 // Add before the caret
                 const caret = terminal.querySelector('.terminal-caret') || document.createElement('span');
                 if (!caret.parentNode) {
@@ -157,7 +157,7 @@ function initResumeUpload(onAutofill) {
                 }
                 terminal.insertBefore(line, caret);
                 terminal.scrollTop = terminal.scrollHeight;
-                
+
                 index++;
                 setTimeout(addLogLine, 200 + Math.random() * 150); // realistic typing delay
             } else {
@@ -230,19 +230,29 @@ function initResumeUpload(onAutofill) {
                 {
                     title: "Love, and only love",
                     isbn: "ISBN 978-81-985729-0-5",
-                    desc: "A collection of short prose, introspective poetry, and essays examining the textures of human intimacy, digital vulnerability, and emotional friction in modern society.",
+                    desc: "A collection of short stories examining the different textures of love in modern society.",
                     cover: "assets/books/love-cover.jpg",
-                    pdf: "assets/books/sample.pdf",
-                    buyLink: "https://amazon.com"
+                    status: "published and available as a hardcopy via DM.",
+                    buyLink: "https://www.linkedin.com/in/sanjana-londhe-9ab383334/",
+                    pdf: ""
                 },
                 {
                     title: "Poem-The Sea Speaks (Book: Your Ink)",
                     isbn: "ISBN 978-93-6489-354-1",
-                    desc: "A reflection on the power of nature and its ability to inspire awe and wonder.",
-                    cover: "assets/books/your-ink.jpg",
-                    preview: "assets/books/sea-speaks-page.jpg",
-                    pdf: "assets/books/sample.pdf",
-                    buyLink: "https://amazon.com"
+                    desc: "A reflection on the recurrence of problems in our life, and that one should focus on solving them instead of running away.",
+                    cover: "assets/books/your-ink-cover.jpg",
+                    pdf: "https://drive.google.com/file/d/1S3LICITquWuq_-mFJsbqugHZ_TA3Qzp3/view?usp=drive_link",
+                    "book pdf": "https://drive.google.com/file/d/1S3LICITquWuq_-mFJsbqugHZ_TA3Qzp3/view?usp=drive_link",
+                    status: "published"
+                },
+                {
+                    title: "Poem-A New Spring (Book: Blossoms begin)",
+                    isbn: "ISBN 978-81-986291-8-0",
+                    desc: "A poem that celebrates the beauty of nature and the joy of spring.",
+                    cover: "assets/books/blossoms.jpg",
+                    pdf: "https://drive.google.com/file/d/1y2dc5COzLY1nvgHQV4GHgBx7nmLAwkS3/view?usp=drive_link",
+                    "book pdf": "https://drive.google.com/file/d/1y2dc5COzLY1nvgHQV4GHgBx7nmLAwkS3/view?usp=drive_link",
+                    status: "published"
                 }
             ],
             experience: [

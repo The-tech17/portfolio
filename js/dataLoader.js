@@ -5,21 +5,27 @@
  */
 const portfolioLoader = {
     async load(jsonPath = 'data/portfolio.json') {
-        const cached = window.portfolioStorage.getPortfolioData();
-        if (cached) {
-            return cached;
-        }
-
         try {
-            const response = await fetch(jsonPath);
+            // Append cache buster to ensure updates to portfolio.json are fetched immediately
+            const cacheBuster = `?t=${Date.now()}`;
+            const response = await fetch(`${jsonPath}${cacheBuster}`, { cache: 'no-store' });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            // Cache in localStorage via portfolioStorage
-            window.portfolioStorage.savePortfolioData(data);
+            // Cache in localStorage via portfolioStorage for offline resilience
+            if (window.portfolioStorage && typeof window.portfolioStorage.savePortfolioData === 'function') {
+                window.portfolioStorage.savePortfolioData(data);
+            }
             return data;
         } catch (error) {
+            console.warn("dataLoader network fetch failed, checking local cache fallback:", error);
+            if (window.portfolioStorage && typeof window.portfolioStorage.getPortfolioData === 'function') {
+                const cached = window.portfolioStorage.getPortfolioData();
+                if (cached) {
+                    return cached;
+                }
+            }
             console.error("dataLoader failed to load portfolio JSON:", error);
             throw error;
         }

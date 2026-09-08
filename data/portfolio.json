@@ -123,13 +123,15 @@
       "isbn": "ISBN 978-81-985729-0-5",
       "desc": "A collection of short stories examining the different textures of love in modern society.",
       "cover": "assets/books/love-cover.jpg",
-      "status": "published and available as a hardcopy via DM."
+      "status": "published and available as a hardcopy via DM.",
+      "dmLink": "[EMAIL_ADDRESS]"
     },
     {
       "title": "Poem-The Sea Speaks (Book: Your Ink)",
       "isbn": "ISBN 978-93-6489-354-1",
       "desc": "A reflection on the recurrence of problems in our life, and that one should focus on solving them instead of running away.",
       "cover": "assets/books/your-ink-cover.jpg",
+      "pdf": "https://drive.google.com/file/d/1S3LICITquWuq_-mFJsbqugHZ_TA3Qzp3/view?usp=drive_link",
       "book pdf": "https://drive.google.com/file/d/1S3LICITquWuq_-mFJsbqugHZ_TA3Qzp3/view?usp=drive_link",
       "status": "published"
     },
@@ -138,6 +140,7 @@
       "isbn": "ISBN 978-81-986291-8-0",
       "desc": "A poem that celebrates the beauty of nature and the joy of spring.",
       "cover": "assets/books/blossoms.jpg",
+      "pdf": "https://drive.google.com/file/d/1y2dc5COzLY1nvgHQV4GHgBx7nmLAwkS3/view?usp=drive_link",
       "book pdf": "https://drive.google.com/file/d/1y2dc5COzLY1nvgHQV4GHgBx7nmLAwkS3/view?usp=drive_link",
       "status": "published"
     }

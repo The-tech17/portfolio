@@ -58,13 +58,16 @@ function syncEditorInputsToState() {
         const isbn = item.querySelector('.publication-isbn').value;
         const desc = item.querySelector('.publication-desc').value;
         const buyLink = item.querySelector('.publication-buylink').value;
-        const pdf = item.querySelector('.publication-pdf').value;
+        const pdfInput = item.querySelector('.publication-pdf').value;
+        const statusInput = item.querySelector('.publication-status') ? item.querySelector('.publication-status').value : '';
 
         const existingPub = (portfolioData.publications && portfolioData.publications[index]) || {};
         const cover = existingPub.cover || '';
         const preview = existingPub.preview || '';
+        const status = statusInput || existingPub.status || '';
+        const pdf = pdfInput || existingPub.pdf || existingPub['book pdf'] || '';
 
-        publications.push({ title, isbn, desc, buyLink, pdf, cover, preview });
+        publications.push({ title, isbn, desc, status, buyLink, pdf, "book pdf": pdf, cover, preview });
     });
     portfolioData.publications = publications;
 
@@ -252,7 +255,7 @@ function renderPublicationsEditor(publications) {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                 </svg>
             </button>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div class="space-y-1">
                     <label class="text-[10px] font-semibold text-zinc-500 uppercase">Publication Title</label>
                     <input type="text" class="form-input publication-title text-xs text-zinc-300" value="${pub.title || ''}" placeholder="e.g. Love, and only love">
@@ -261,6 +264,10 @@ function renderPublicationsEditor(publications) {
                     <label class="text-[10px] font-semibold text-zinc-500 uppercase">ISBN / Meta details</label>
                     <input type="text" class="form-input publication-isbn text-xs text-zinc-300" value="${pub.isbn || ''}" placeholder="e.g. ISBN 978-3-16-148410-0">
                 </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-semibold text-zinc-500 uppercase">Status / Availability</label>
+                    <input type="text" class="form-input publication-status text-xs text-zinc-300" value="${pub.status || ''}" placeholder="e.g. published or available via DM">
+                </div>
             </div>
             <div class="space-y-1">
                 <label class="text-[10px] font-semibold text-zinc-500 uppercase">Short Description</label>
@@ -268,12 +275,12 @@ function renderPublicationsEditor(publications) {
             </div>
             <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1">
-                    <label class="text-[10px] font-semibold text-zinc-500 uppercase">Buy Link URL</label>
-                    <input type="text" class="form-input publication-buylink text-xs text-zinc-300" value="${pub.buyLink || ''}" placeholder="https://amazon.com/...">
+                    <label class="text-[10px] font-semibold text-zinc-500 uppercase">Buy / Request Link URL</label>
+                    <input type="text" class="form-input publication-buylink text-xs text-zinc-300" value="${pub.buyLink || pub.dmLink || ''}" placeholder="https://linkedin.com/... or store link">
                 </div>
                 <div class="space-y-1">
-                    <label class="text-[10px] font-semibold text-zinc-500 uppercase">Sample PDF File Path</label>
-                    <input type="text" class="form-input publication-pdf text-xs text-zinc-300" value="${pub.pdf || ''}" placeholder="assets/books/sample.pdf">
+                    <label class="text-[10px] font-semibold text-zinc-500 uppercase">PDF URL / Drive Link</label>
+                    <input type="text" class="form-input publication-pdf text-xs text-zinc-300" value="${pub.pdf || pub['book pdf'] || ''}" placeholder="https://drive.google.com/file/d/...">
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-3">

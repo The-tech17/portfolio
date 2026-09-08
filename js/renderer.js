@@ -47,7 +47,7 @@ const portfolioRenderer = {
             const key = skill.toLowerCase();
             let emoji = '⚙️';
             let desc = 'Core technology and integration competency.';
-            
+
             if (key.includes('prompt')) {
                 emoji = '🧠';
                 desc = 'Designing robust AI workflows and multi-agent systems.';
@@ -61,7 +61,7 @@ const portfolioRenderer = {
                 emoji = '🤖';
                 desc = 'Building conversational AI products and automations.';
             }
-            
+
             return `
                 <div class="flex flex-col gap-2 rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-5 hover:border-zinc-700 transition">
                     <div class="flex items-center gap-3">
@@ -253,15 +253,13 @@ const portfolioRenderer = {
                         <button onclick="window.portfolioRenderer.showProjectDetails(${idx})" class="px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:text-white transition text-[9px] font-bold">
                             View Details
                         </button>
-                        <a href="${demoUrl}" ${hasDemo ? 'target="_blank"' : 'onclick="event.preventDefault();"'} class="px-3 py-1.5 rounded-lg text-[9px] font-bold transition flex items-center gap-0.5 ${
-                            hasDemo ? 'bg-white text-zinc-950 hover:bg-zinc-200' : 'bg-zinc-900/80 text-zinc-500 border border-zinc-800/80 cursor-not-allowed hidden'
-                        }">
+                        <a href="${demoUrl}" ${hasDemo ? 'target="_blank"' : 'onclick="event.preventDefault();"'} class="px-3 py-1.5 rounded-lg text-[9px] font-bold transition flex items-center gap-0.5 ${hasDemo ? 'bg-white text-zinc-950 hover:bg-zinc-200' : 'bg-zinc-900/80 text-zinc-500 border border-zinc-800/80 cursor-not-allowed hidden'
+                }">
                             <span>Live Demo</span>
                             ${hasDemo ? '<span>→</span>' : ''}
                         </a>
-                        <a href="${githubUrl}" ${hasGithub ? 'target="_blank"' : 'onclick="event.preventDefault();"'} class="px-3 py-1.5 rounded-lg border text-[9px] font-bold transition ${
-                            hasGithub ? 'border-zinc-800 text-zinc-300 hover:bg-zinc-800/60 hover:text-white' : 'border-zinc-850 text-zinc-500 cursor-not-allowed hidden'
-                        }">
+                        <a href="${githubUrl}" ${hasGithub ? 'target="_blank"' : 'onclick="event.preventDefault();"'} class="px-3 py-1.5 rounded-lg border text-[9px] font-bold transition ${hasGithub ? 'border-zinc-800 text-zinc-300 hover:bg-zinc-800/60 hover:text-white' : 'border-zinc-850 text-zinc-500 cursor-not-allowed hidden'
+                }">
                             GitHub
                         </a>
                     </div>
@@ -287,28 +285,121 @@ const portfolioRenderer = {
         if (!container) return;
 
         const publications = data.publications || [];
+        const contact = data.contact || {};
         const writingListHTML = publications.map((pub, idx) => {
             const coverImg = pub.cover || 'assets/books/love-cover.jpg';
-            const buyBtn = pub.buyLink ? `<a href="${pub.buyLink}" target="_blank" class="px-3.5 py-2 bg-white text-zinc-950 font-bold text-xs rounded-xl hover:bg-zinc-200 transition">Buy Book</a>` : '';
-            const sampleBtn = pub.pdf ? `<a href="${pub.pdf}" target="_blank" class="px-3.5 py-2 border border-zinc-800 text-zinc-300 font-bold text-xs rounded-xl hover:bg-zinc-800 hover:text-white transition">Read Sample</a>` : '';
-            const previewBtn = pub.preview ? `<button onclick="window.portfolioRenderer.openLightbox('${pub.preview}', '${pub.title} Preview')" class="px-3.5 py-2 border border-zinc-800 text-zinc-300 font-bold text-xs rounded-xl hover:bg-zinc-800 hover:text-white transition">View Scan</button>` : '';
+            const pdfUrl = pub.pdf || pub['book pdf'] || pub.bookPdf || pub['book_pdf'] || pub.link || '';
+            const buyUrl = pub.buyLink || pub.buylink || pub['buy link'] || pub.dmLink || '';
+            const status = pub.status || '';
+
+            // Status Badge
+            let statusBadge = '';
+            if (status) {
+                const isHardcopy = status.toLowerCase().includes('hardcopy') || status.toLowerCase().includes('dm');
+                const badgeColor = isHardcopy
+                    ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                    : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30';
+                const dotColor = isHardcopy ? 'bg-amber-400' : 'bg-emerald-400 animate-pulse';
+
+                statusBadge = `
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${badgeColor}">
+                        <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+                        <span>${status}</span>
+                    </span>
+                `;
+            }
+
+            // PDF Action Button
+            let pdfBtn = '';
+            if (pdfUrl) {
+                pdfBtn = `
+                    <a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
+                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <span>Read Work (PDF)</span>
+                        <svg class="w-3 h-3 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                `;
+            }
+
+            // Buy / Purchase / DM Button
+            let buyBtn = '';
+            if (buyUrl) {
+                const isLinkedIn = buyUrl.includes('linkedin.com');
+                const btnText = isLinkedIn ? 'Request Hardcopy (DM)' : 'Buy Book';
+                buyBtn = `
+                    <a href="${buyUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 ${isLinkedIn ? 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700' : 'bg-white text-zinc-950 hover:bg-zinc-200'} font-bold text-xs rounded-xl transition duration-200 shadow-sm">
+                        ${isLinkedIn ? '<svg class="w-3.5 h-3.5 text-blue-400 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>' : ''}
+                        <span>${btnText}</span>
+                        <svg class="w-3 h-3 ${isLinkedIn ? 'text-zinc-400' : 'text-zinc-600'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                `;
+            } else if (status.toLowerCase().includes('dm') || status.toLowerCase().includes('hardcopy')) {
+                const linkedinUrl = contact.linkedin || 'https://www.linkedin.com/in/sanjana-londhe-9ab383334/';
+                buyBtn = `
+                    <a href="${linkedinUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs rounded-xl border border-zinc-700 transition duration-200 shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-blue-400 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <span>Request Hardcopy (DM)</span>
+                        <svg class="w-3 h-3 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                `;
+            }
+
+            // Email author button for hardcopy inquiries
+            let emailBtn = '';
+            if (status.toLowerCase().includes('dm') || status.toLowerCase().includes('hardcopy')) {
+                const authorEmail = contact.email || 'londhesanjana17@gmail.com';
+                const emailSubject = encodeURIComponent(`Hardcopy Inquiry: ${pub.title}`);
+                emailBtn = `
+                    <a href="mailto:${authorEmail}?subject=${emailSubject}" class="inline-flex items-center gap-1.5 px-3.5 py-2 border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-300 hover:text-white font-medium text-xs rounded-xl transition duration-200">
+                        <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span>Email Author</span>
+                    </a>
+                `;
+            }
+
+            // Preview scan button (if pub.preview exists)
+            const previewBtn = pub.preview ? `
+                <button onclick="window.portfolioRenderer.openLightbox('${pub.preview}', '${pub.title} Preview')" class="inline-flex items-center gap-1.5 px-3.5 py-2 border border-zinc-800 bg-zinc-900/40 text-zinc-300 font-medium text-xs rounded-xl hover:bg-zinc-800 hover:text-white transition">
+                    <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    <span>View Scan</span>
+                </button>
+            ` : '';
+
+            // Cover click lightbox button
+            const coverLightboxBtn = `
+                <button onclick="window.portfolioRenderer.openLightbox('${coverImg}', '${pub.title} Cover')" class="inline-flex items-center gap-1.5 px-3 py-2 border border-zinc-800/80 bg-zinc-900/30 text-zinc-400 hover:text-zinc-200 text-xs font-medium rounded-xl hover:bg-zinc-800/60 transition" title="Enlarge cover image">
+                    <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>View Cover</span>
+                </button>
+            `;
 
             return `
-                <div id="writing-card-${idx}" class="book-card rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 flex flex-col sm:flex-row gap-6 items-center hover:border-zinc-700 transition duration-300">
-                    <!-- Book Cover Container -->
-                    <div class="book-cover-container w-28 h-36 rounded-xl border border-zinc-800 bg-zinc-950 overflow-hidden flex-shrink-0 flex items-center justify-center relative cursor-pointer" onclick="window.portfolioRenderer.openLightbox('${pub.preview || coverImg}', '${pub.title}')">
-                        <img src="${coverImg}" alt="${pub.title}" class="w-full h-full object-cover">
+                <div id="writing-card-${idx}" class="book-card rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 flex flex-col sm:flex-row gap-6 items-center sm:items-start hover:border-zinc-700 transition duration-300 shadow-lg">
+                    <!-- Book Cover Container with 3D and Hover Zoom cues -->
+                    <div class="book-cover-container group w-28 sm:w-32 h-40 sm:h-44 rounded-xl border border-zinc-800 bg-zinc-950 overflow-hidden flex-shrink-0 flex items-center justify-center relative cursor-pointer shadow-md" onclick="window.portfolioRenderer.openLightbox('${pub.preview || coverImg}', '${pub.title}')" title="Click to view full cover">
+                        <img src="${coverImg}" alt="${pub.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition duration-200">
+                            <span class="p-1.5 px-2.5 rounded-lg bg-black/70 text-white text-[11px] font-medium backdrop-blur-sm flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path></svg>
+                                <span>Zoom</span>
+                            </span>
+                        </div>
                     </div>
                     <div class="space-y-3 flex-1 w-full text-center sm:text-left">
-                        <div>
-                            <span class="text-[10px] text-zinc-500 font-mono tracking-wider">${pub.isbn || ''}</span>
-                            <h3 class="text-xl font-bold text-white mt-0.5">${pub.title || 'Untitled Publication'}</h3>
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                            ${pub.isbn ? `<span class="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-medium bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">${pub.isbn}</span>` : ''}
+                            ${statusBadge}
                         </div>
-                        <p class="text-zinc-400 text-xs leading-relaxed">${pub.desc || ''}</p>
-                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1.5">
-                            ${sampleBtn}
-                            ${previewBtn}
+                        <div>
+                            <h3 class="text-xl font-bold text-white mt-0.5 tracking-tight">${pub.title || 'Untitled Publication'}</h3>
+                        </div>
+                        <p class="text-zinc-300 text-sm leading-relaxed max-w-2xl">${pub.desc || ''}</p>
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 pt-2">
+                            ${pdfBtn}
                             ${buyBtn}
+                            ${emailBtn}
+                            ${previewBtn}
+                            ${coverLightboxBtn}
                         </div>
                     </div>
                 </div>
@@ -333,7 +424,7 @@ const portfolioRenderer = {
         if (!container) return;
 
         const experience = data.experience || [];
-        
+
         // Dynamic horizontal/micro timeline diagram nodes at the top
         const timelineNodes = [
             { year: '2023', text: 'Started B.Tech', icon: '🎓' },
@@ -482,14 +573,14 @@ const portfolioRenderer = {
     showProjectDetails(idx) {
         const project = window.portfolioProjects[idx];
         if (!project) return;
-        
+
         document.getElementById('modal-project-name').textContent = project.name || 'Unnamed Project';
         document.getElementById('modal-project-image').src = project.image || '';
         document.getElementById('modal-project-desc').textContent = project.desc || '';
         document.getElementById('modal-project-timeline').textContent = project.timeline || 'N/A';
         document.getElementById('modal-project-status').textContent = project.status || 'Active';
         document.getElementById('modal-project-tags').innerHTML = renderTagChips(project.tags);
-        
+
         // GitHub & Demo links
         const gitLink = document.getElementById('modal-project-github');
         if (project.github) {
@@ -498,7 +589,7 @@ const portfolioRenderer = {
         } else {
             gitLink.classList.add('hidden');
         }
-        
+
         const demoLink = document.getElementById('modal-project-demo');
         if (project.demo) {
             demoLink.href = project.demo;
@@ -506,11 +597,11 @@ const portfolioRenderer = {
         } else {
             demoLink.classList.add('hidden');
         }
-        
+
         // Problem & Solution
         document.getElementById('modal-project-problem').textContent = project.problem || 'No problem statement documented.';
         document.getElementById('modal-project-solution').textContent = project.solution || 'No solution blueprint documented.';
-        
+
         // Dynamic Markdown Case Study Loader
         const markdownContainer = document.getElementById('modal-markdown-container');
         const markdownBody = document.getElementById('modal-markdown-body');
@@ -532,23 +623,23 @@ const portfolioRenderer = {
         } else {
             markdownContainer.classList.add('hidden');
         }
-        
+
         // Gallery Setup
         const galleryContainer = document.getElementById('modal-gallery-container');
         const slidesContainer = document.getElementById('modal-gallery-slides');
         const dotsContainer = document.getElementById('modal-gallery-dots');
-        
+
         if (project.gallery && project.gallery.length > 0) {
             galleryContainer.classList.remove('hidden');
             slidesContainer.innerHTML = '';
             dotsContainer.innerHTML = '';
-            
+
             project.gallery.forEach((img, gIdx) => {
                 const slide = document.createElement('div');
                 slide.className = 'w-full flex-shrink-0 aspect-video';
                 slide.innerHTML = `<img src="${img}" class="w-full h-full object-cover gallery-zoom" onclick="window.portfolioRenderer.openLightbox('${img}', '${project.name} Screenshot')">`;
                 slidesContainer.appendChild(slide);
-                
+
                 const dot = document.createElement('button');
                 dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${gIdx === 0 ? 'bg-white w-4' : 'bg-zinc-600 hover:bg-zinc-400'}`;
                 dot.title = `Slide ${gIdx + 1}`;
@@ -557,7 +648,7 @@ const portfolioRenderer = {
                 };
                 dotsContainer.appendChild(dot);
             });
-            
+
             window.currentSlideIndex = 0;
             window.currentGallerySize = project.gallery.length;
             window.portfolioRenderer.setGallerySlide(0);
@@ -582,7 +673,7 @@ const portfolioRenderer = {
         } else {
             galleryContainer.classList.add('hidden');
         }
-        
+
         // Show modal
         document.getElementById('project-modal').classList.remove('hidden');
     },
@@ -593,7 +684,7 @@ const portfolioRenderer = {
         if (slides) {
             slides.style.transform = `translateX(-${slideIdx * 100}%)`;
         }
-        
+
         // Update dots visual active state
         const dots = document.getElementById('modal-gallery-dots')?.children;
         if (dots) {
@@ -622,33 +713,33 @@ const portfolioRenderer = {
         let html = md;
         // Escape HTML tags to prevent XSS (except headers/pre/etc we insert ourselves)
         html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        
+
         // Headings
         html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
         html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
         html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-        
+
         // Bold & Italics
         html = html.replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>');
         html = html.replace(/\*(.*)\*/gim, '<em>$1</em>');
-        
+
         // Blockquotes
         html = html.replace(/^\>\s+(.*$)/gim, '<blockquote>$1</blockquote>');
-        
+
         // Fenced Code Blocks (```)
         html = html.replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>');
-        
+
         // Inline Code
         html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
-        
+
         // Unordered lists
         html = html.replace(/^\s*[\-\*]\s+(.*$)/gim, '<li>$1</li>');
         html = html.replace(/(<li>[\s\S]*?<\/li>)/gim, '<ul>$1</ul>');
         html = html.replace(/<\/ul>\s*<ul>/gim, '');
-        
+
         // Links
         html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" class="text-white hover:underline">$1</a>');
-        
+
         // Split and add paragraphs for regular text lines
         const lines = html.split('\n');
         const parsedLines = lines.map(line => {
@@ -659,7 +750,7 @@ const portfolioRenderer = {
             }
             return `<p>${line}</p>`;
         });
-        
+
         return parsedLines.join('\n');
     }
 };
